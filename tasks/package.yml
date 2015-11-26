@@ -7,6 +7,28 @@
 
 ---
 
+- name: RedHat | Update tzdata.
+  sudo: yes
+  yum:
+    name: 'tzdata'
+    state: latest
+  when: ansible_os_family == 'RedHat'
+  tags:
+    - package
+    - ntp
+
+- name: Debian | Update tzdata.
+  sudo: yes
+  apt:
+    pkg: 'tzdata'
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_os_family == 'Debian'
+  tags:
+    - package
+    - ntp
+
 - name: NTP | Debian | Install specific NTP version.
   sudo: yes
   apt:
